@@ -1,31 +1,10 @@
 import express from 'express';
-import fs from 'fs';
-import path from 'path';
+import data from './data/mock.json' assert {type:'json'}; 
 
 const app = express();
 const PORT = 3000;
 
 
-app.get('/', (req, res) => {
-    // Resolve the path to the JSON file
-    const jsonPath = path.resolve('data/mock.json');
-
-    // Read the file and parse it as JSON
-    fs.readFile(jsonPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading JSON file:', err);
-            return res.status(500).json({ error: 'Error reading JSON file' });
-        }
-
-        try {
-            const parsedData = JSON.parse(data); // Parse the JSON content
-            res.json(parsedData); // Send the parsed JSON as response
-        } catch (parseError) {
-            console.error('Error parsing JSON:', parseError);
-            return res.status(500).json({ error: 'Error parsing JSON data' });
-        }
-    });
-});
 
 app.post('/create', (req, res) => {
     res.send('This is a POST request at /create')
